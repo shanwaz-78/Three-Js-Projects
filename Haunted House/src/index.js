@@ -119,7 +119,7 @@ function generateStars() {
   const starMaterial = new THREE.MeshStandardMaterial({ color: "#ffffff" });
   const stars = new THREE.Group();
 
-  for (let i = 0; i < 1000; i++) {
+  for (const i = 0; i < 1000; i++) {
     const star = new THREE.Mesh(starGeometry, starMaterial);
 
     const radius = 15;
@@ -137,7 +137,7 @@ function generateStars() {
 const starGroup = generateStars();
 scene.add(starGroup);
 
-for (let i = 0; i < 70; i++) {
+for (const i = 0; i < 70; i++) {
   const angle = Math.random() * Math.PI * 2;
   const radius = 6 + Math.random() * 3;
   const xPos = Math.sin(angle) * radius * 1.2;

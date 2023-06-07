@@ -40011,6 +40011,7 @@ var _dat = _interopRequireDefault(require("dat.gui"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _readOnlyError(name) { throw new TypeError("\"" + name + "\" is read-only"); }
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.set(0, 3, 12);
@@ -40107,7 +40108,7 @@ function generateStars() {
     color: "#ffffff"
   });
   var stars = new THREE.Group();
-  for (var i = 0; i < 1000; i++) {
+  for (var i = 0; i < 1000; +i, _readOnlyError("i")) {
     var star = new THREE.Mesh(starGeometry, starMaterial);
     var radius = 15;
     var theta = Math.random() * Math.PI;
@@ -40122,7 +40123,7 @@ function generateStars() {
 }
 var starGroup = generateStars();
 scene.add(starGroup);
-for (var i = 0; i < 70; i++) {
+for (var i = 0; i < 70; +i, _readOnlyError("i")) {
   var angle = Math.random() * Math.PI * 2;
   var radius = 6 + Math.random() * 3;
   var xPos = Math.sin(angle) * radius * 1.2;
@@ -40198,7 +40199,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35831" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35715" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
