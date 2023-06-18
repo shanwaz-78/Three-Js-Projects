@@ -211,11 +211,11 @@ function add_gui() {
 add_gui();
 
 document.addEventListener("keypress", (event) => {
-  if (event.key === "f" || event.key === "F") {
-    if (!document.fullscreenElement) {
-      document.body.requestFullscreen();
-    } else {
-      document.exitFullscreen();
+  if(event.key === 'f' || event.key === 'F'){
+    if(!document.fullscreenElement){
+      document.body.requestFullscreen()
+    }else{
+      document.exitFullscreen()
     }
   }
 });
@@ -242,3 +242,4 @@ function animate() {
   renderer.render(scene, camera);
 }
 animate();
+
