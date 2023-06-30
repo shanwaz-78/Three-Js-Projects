@@ -1,0 +1,1 @@
+{"version":3,"sources":["style.css"],"names":[],"mappings":"AAAA,EACE,QAAS,CACT,SACF,CAEA,UAEE,eACF,CAEA,OACE,cAAe,CACf,KAAM,CACN,MAAO,CACP,aACF","file":"style.84149e20.css","sourceRoot":"..","sourcesContent":["* {\n  margin: 0;\n  padding: 0;\n}\n\nhtml,\nbody {\n  overflow: hidden;\n}\n\n.webgl {\n  position: fixed;\n  top: 0;\n  left: 0;\n  overflow: none;\n}"]}
