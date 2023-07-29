@@ -19,7 +19,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 const fog = new THREE.Fog("#262837", 4, 15);
-scene.fog = fog;
+scene.fog = fog;  
 
 const ambient_light = new THREE.AmbientLight("#b9d5ff", 0.2);
 scene.add(ambient_light);
@@ -115,11 +115,11 @@ const grave_material = new THREE.MeshStandardMaterial({ color: "#bffff1" });
 
 // stars
 function generateStars() {
-  const starGeometry = new THREE.SphereGeometry(0.05, 25, 25);
+  const starGeometry = new THREE.SphereGeometry(0.06, 25, 25);
   const starMaterial = new THREE.MeshStandardMaterial({ color: "#ffffff" });
   const stars = new THREE.Group();
 
-  for (const i = 0; i < 1000; i++) {
+  for (let i = 0; i < 1000; i++) {
     const star = new THREE.Mesh(starGeometry, starMaterial);
 
     const radius = 15;
@@ -137,7 +137,7 @@ function generateStars() {
 const starGroup = generateStars();
 scene.add(starGroup);
 
-for (const i = 0; i < 70; i++) {
+for (let i = 0; i < 70; i++) {
   const angle = Math.random() * Math.PI * 2;
   const radius = 6 + Math.random() * 3;
   const xPos = Math.sin(angle) * radius * 1.2;
