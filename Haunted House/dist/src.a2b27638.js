@@ -39998,6 +39998,8 @@ var index = {
 };
 var _default = index;
 exports.default = _default;
+},{}],"static/audio/ghost-whispers-6030.mp3":[function(require,module,exports) {
+module.exports = "/ghost-whispers-6030.43680011.mp3";
 },{}],"src/index.js":[function(require,module,exports) {
 "use strict";
 
@@ -40008,6 +40010,7 @@ var _Grow = _interopRequireDefault(require("../static/img/Grow.jpg"));
 var _grass = _interopRequireDefault(require("../static/img/grass2.jpg"));
 var _OrbitControls = require("three/examples/jsm/controls/OrbitControls");
 var _dat = _interopRequireDefault(require("dat.gui"));
+var _ghostWhispers = _interopRequireDefault(require("../static/audio/ghost-whispers-6030.mp3"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -40022,11 +40025,18 @@ scene.fog = fog;
 var ambient_light = new THREE.AmbientLight("#b9d5ff", 0.2);
 scene.add(ambient_light);
 var house = new THREE.Group();
-scene.add(house);
+var miniHouse = new THREE.Group();
+scene.add(house, miniHouse);
+
+// // door light
 var door_light = new THREE.PointLight("#ff7d46", 2, 100);
 door_light.position.set(0, 2.7, 2.8);
 house.add(door_light);
 
+// mini houe door light
+var door_light2 = new THREE.PointLight("#ff7d46", 2, 100);
+door_light2.position.set(-4.1, -0.1, 2.8);
+miniHouse.add(door_light2);
 // floor textures.
 var floor_texture = new THREE.TextureLoader().load(_grass.default);
 var ambient_texture = new THREE.TextureLoader().load(_Grow.default);
@@ -40055,6 +40065,14 @@ var roof = new THREE.Mesh(new THREE.ConeGeometry(5, 1.6, 4), new THREE.MeshStand
 roof.position.y = 3.7;
 roof.rotation.y = 2.4;
 house.add(roof);
+
+// mini house roof
+var miniRoof = new THREE.Mesh(new THREE.ConeGeometry(1, 0.5, 4), new THREE.MeshStandardMaterial({
+  color: "#b35f41"
+}));
+miniRoof.position.set(-4, 0.2, 2);
+miniRoof.rotation.y = 0.7;
+miniHouse.add(miniRoof);
 var bush_geometry = new THREE.SphereGeometry(1, 17, 17);
 var bush_material = new THREE.MeshStandardMaterial({
   color: "#89c854",
@@ -40086,11 +40104,18 @@ var door_texture = new THREE.TextureLoader().load(_dorr.default);
 var wall_texture = new THREE.TextureLoader().load(_wall.default);
 
 // door
-var door = new THREE.Mesh(new THREE.PlaneGeometry(2.5, 3), new THREE.MeshStandardMaterial({
+var door = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), new THREE.MeshStandardMaterial({
   map: door_texture
 }));
 door.position.z = 2.5 + 0.01;
 house.add(door);
+
+// mini door
+var Minidoor = new THREE.Mesh(new THREE.PlaneGeometry(0.6, 0.6), new THREE.MeshStandardMaterial({
+  map: door_texture
+}));
+Minidoor.position.set(-4, -0.7, 2.5 + 0.01);
+miniHouse.add(Minidoor);
 var graves = new THREE.Group();
 scene.add(graves);
 
@@ -40139,15 +40164,22 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Set shadow map type for smo
 
 ghost1.castShadow = true; // Enable shadow casting for ghost1
 
-var walls = new THREE.Mesh(new THREE.BoxGeometry(6, 4, 5), new THREE.MeshStandardMaterial({
+// house walls
+var BoxGeometry = new THREE.BoxGeometry(6, 4, 5);
+var miniBoxGeometry = new THREE.BoxGeometry(1, 1, 1);
+var boxMaterial = new THREE.MeshStandardMaterial({
   map: wall_texture,
   aoMap: wall_texture,
   alphaMap: wall_texture,
   roughnessMap: wall_texture
-}));
+});
+var walls = new THREE.Mesh(BoxGeometry, boxMaterial);
+var miniWalls = new THREE.Mesh(miniBoxGeometry, boxMaterial);
+miniWalls.position.set(-4, -0.5, 2);
 walls.position.y = 1;
 walls.receiveShadow = true; // Enable shadow receiving for walls
 house.add(walls);
+miniHouse.add(miniWalls);
 var controls = new _OrbitControls.OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 var clock = new THREE.Clock();
@@ -40159,6 +40191,12 @@ function add_gui() {
   gui.add(ghost1, "intensity", -2, 3).name("Ghost Light Intensity");
 }
 add_gui();
+
+// audio listner
+var audioFile = new Audio(_ghostWhispers.default);
+document.addEventListener('DOMContentLoaded', function (event) {
+  audioFile.play();
+});
 function tick() {
   requestAnimationFrame(tick);
   var elapsed_time = clock.getElapsedTime() * 1;
@@ -40173,7 +40211,7 @@ function animate() {
   renderer.render(scene, camera);
 }
 animate();
-},{"three":"node_modules/three/build/three.module.js","../static/img/dorr.jpg":"static/img/dorr.jpg","../static/img/wall2640.jpg":"static/img/wall2640.jpg","../static/img/Grow.jpg":"static/img/Grow.jpg","../static/img/grass2.jpg":"static/img/grass2.jpg","three/examples/jsm/controls/OrbitControls":"node_modules/three/examples/jsm/controls/OrbitControls.js","dat.gui":"node_modules/dat.gui/build/dat.gui.module.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"three":"node_modules/three/build/three.module.js","../static/img/dorr.jpg":"static/img/dorr.jpg","../static/img/wall2640.jpg":"static/img/wall2640.jpg","../static/img/Grow.jpg":"static/img/Grow.jpg","../static/img/grass2.jpg":"static/img/grass2.jpg","three/examples/jsm/controls/OrbitControls":"node_modules/three/examples/jsm/controls/OrbitControls.js","dat.gui":"node_modules/dat.gui/build/dat.gui.module.js","../static/audio/ghost-whispers-6030.mp3":"static/audio/ghost-whispers-6030.mp3"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -40198,7 +40236,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41049" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46707" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

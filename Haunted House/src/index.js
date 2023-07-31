@@ -5,6 +5,7 @@ import grassImage from "../static/img/Grow.jpg";
 import grass2Image from "../static/img/grass2.jpg";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import dat from "dat.gui";
+import audio from "../static/audio/ghost-whispers-6030.mp3";
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(
@@ -19,18 +20,24 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 const fog = new THREE.Fog("#262837", 4, 15);
-scene.fog = fog;  
+scene.fog = fog;
 
 const ambient_light = new THREE.AmbientLight("#b9d5ff", 0.2);
 scene.add(ambient_light);
 
 const house = new THREE.Group();
-scene.add(house);
+const miniHouse = new THREE.Group();
+scene.add(house, miniHouse);
 
+// // door light
 const door_light = new THREE.PointLight("#ff7d46", 2, 100);
 door_light.position.set(0, 2.7, 2.8);
 house.add(door_light);
 
+// mini houe door light
+const door_light2 = new THREE.PointLight("#ff7d46", 2, 100);
+door_light2.position.set(-4.1, -0.1, 2.8);
+miniHouse.add(door_light2);
 // floor textures.
 const floor_texture = new THREE.TextureLoader().load(grass2Image);
 const ambient_texture = new THREE.TextureLoader().load(grassImage);
@@ -62,6 +69,14 @@ roof.position.y = 3.7;
 roof.rotation.y = 2.4;
 house.add(roof);
 
+// mini house roof
+const miniRoof = new THREE.Mesh(
+  new THREE.ConeGeometry(1, 0.5, 4),
+  new THREE.MeshStandardMaterial({ color: "#b35f41" })
+);
+miniRoof.position.set(-4, 0.2, 2);
+miniRoof.rotation.y = 0.7;
+miniHouse.add(miniRoof);
 const bush_geometry = new THREE.SphereGeometry(1, 17, 17);
 const bush_material = new THREE.MeshStandardMaterial({
   color: "#89c854",
@@ -98,13 +113,23 @@ const wall_texture = new THREE.TextureLoader().load(wallImage);
 
 // door
 const door = new THREE.Mesh(
-  new THREE.PlaneGeometry(2.5, 3),
+  new THREE.PlaneGeometry(2, 2),
   new THREE.MeshStandardMaterial({
     map: door_texture,
   })
 );
 door.position.z = 2.5 + 0.01;
 house.add(door);
+
+// mini door
+const Minidoor = new THREE.Mesh(
+  new THREE.PlaneGeometry(0.6, 0.6),
+  new THREE.MeshStandardMaterial({
+    map: door_texture,
+  })
+);
+Minidoor.position.set(-4, -0.7, 2.5 + 0.01);
+miniHouse.add(Minidoor);
 
 const graves = new THREE.Group();
 scene.add(graves);
@@ -155,18 +180,22 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Set shadow map type for smo
 
 ghost1.castShadow = true; // Enable shadow casting for ghost1
 
-const walls = new THREE.Mesh(
-  new THREE.BoxGeometry(6, 4, 5),
-  new THREE.MeshStandardMaterial({
-    map: wall_texture,
-    aoMap: wall_texture,
-    alphaMap: wall_texture,
-    roughnessMap: wall_texture,
-  })
-);
+// house walls
+const BoxGeometry = new THREE.BoxGeometry(6, 4, 5);
+const miniBoxGeometry = new THREE.BoxGeometry(1, 1, 1);
+const boxMaterial = new THREE.MeshStandardMaterial({
+  map: wall_texture,
+  aoMap: wall_texture,
+  alphaMap: wall_texture,
+  roughnessMap: wall_texture,
+});
+const walls = new THREE.Mesh(BoxGeometry, boxMaterial);
+const miniWalls = new THREE.Mesh(miniBoxGeometry, boxMaterial);
+miniWalls.position.set(-4, -0.5, 2);
 walls.position.y = 1;
 walls.receiveShadow = true; // Enable shadow receiving for walls
 house.add(walls);
+miniHouse.add(miniWalls);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
@@ -180,6 +209,12 @@ function add_gui() {
   gui.add(ghost1, "intensity", -2, 3).name("Ghost Light Intensity");
 }
 add_gui();
+
+// audio listner
+const audioFile = new Audio(audio);
+document.addEventListener('DOMContentLoaded', (event) => {
+  audioFile.play();
+});
 
 function tick() {
   requestAnimationFrame(tick);
