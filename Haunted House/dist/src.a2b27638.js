@@ -40028,7 +40028,7 @@ var house = new THREE.Group();
 var miniHouse = new THREE.Group();
 scene.add(house, miniHouse);
 
-// // door light
+// door light
 var door_light = new THREE.PointLight("#ff7d46", 2, 100);
 door_light.position.set(0, 2.7, 2.8);
 house.add(door_light);
@@ -40194,7 +40194,7 @@ add_gui();
 
 // audio listner
 var audioFile = new Audio(_ghostWhispers.default);
-document.addEventListener('DOMContentLoaded', function (event) {
+document.addEventListener('DOMContentLoaded', function () {
   audioFile.play();
 });
 function tick() {
@@ -40236,7 +40236,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46707" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35919" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

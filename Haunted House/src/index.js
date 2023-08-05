@@ -29,7 +29,7 @@ const house = new THREE.Group();
 const miniHouse = new THREE.Group();
 scene.add(house, miniHouse);
 
-// // door light
+// door light
 const door_light = new THREE.PointLight("#ff7d46", 2, 100);
 door_light.position.set(0, 2.7, 2.8);
 house.add(door_light);
