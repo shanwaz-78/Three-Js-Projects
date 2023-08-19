@@ -212,7 +212,7 @@ add_gui();
 
 // audio listner
 const audioFile = new Audio(audio);
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   audioFile.play();
 });
 
