@@ -39998,8 +39998,6 @@ var index = {
 };
 var _default = index;
 exports.default = _default;
-},{}],"static/audio/ghost-whispers-6030.mp3":[function(require,module,exports) {
-module.exports = "/ghost-whispers-6030.43680011.mp3";
 },{}],"src/index.js":[function(require,module,exports) {
 "use strict";
 
@@ -40010,10 +40008,11 @@ var _Grow = _interopRequireDefault(require("../static/img/Grow.jpg"));
 var _grass = _interopRequireDefault(require("../static/img/grass2.jpg"));
 var _OrbitControls = require("three/examples/jsm/controls/OrbitControls");
 var _dat = _interopRequireDefault(require("dat.gui"));
-var _ghostWhispers = _interopRequireDefault(require("../static/audio/ghost-whispers-6030.mp3"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+// import audio from "../static/audio/ghost-whispers-6030.mp3";
+
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.set(0, 3, 12);
@@ -40193,10 +40192,11 @@ function add_gui() {
 add_gui();
 
 // audio listner
-var audioFile = new Audio(_ghostWhispers.default);
-document.addEventListener('DOMContentLoaded', function () {
-  audioFile.play();
-});
+// const audioFile = new Audio(audio);
+// document.addEventListener("DOMContentLoaded", () => {
+//   audioFile.play();
+// });
+
 function tick() {
   requestAnimationFrame(tick);
   var elapsed_time = clock.getElapsedTime() * 1;
@@ -40211,7 +40211,7 @@ function animate() {
   renderer.render(scene, camera);
 }
 animate();
-},{"three":"node_modules/three/build/three.module.js","../static/img/dorr.jpg":"static/img/dorr.jpg","../static/img/wall2640.jpg":"static/img/wall2640.jpg","../static/img/Grow.jpg":"static/img/Grow.jpg","../static/img/grass2.jpg":"static/img/grass2.jpg","three/examples/jsm/controls/OrbitControls":"node_modules/three/examples/jsm/controls/OrbitControls.js","dat.gui":"node_modules/dat.gui/build/dat.gui.module.js","../static/audio/ghost-whispers-6030.mp3":"static/audio/ghost-whispers-6030.mp3"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"three":"node_modules/three/build/three.module.js","../static/img/dorr.jpg":"static/img/dorr.jpg","../static/img/wall2640.jpg":"static/img/wall2640.jpg","../static/img/Grow.jpg":"static/img/Grow.jpg","../static/img/grass2.jpg":"static/img/grass2.jpg","three/examples/jsm/controls/OrbitControls":"node_modules/three/examples/jsm/controls/OrbitControls.js","dat.gui":"node_modules/dat.gui/build/dat.gui.module.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -40236,7 +40236,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35919" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41111" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

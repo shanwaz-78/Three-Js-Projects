@@ -32,7 +32,6 @@ scene.add(point_light);
 // group is used to move our particular object let's say i have multiple CornGeometry's in document and i want to move particular object then i will insert the all geometry's inside that group.
 
 const group = new THREE.Group();
-
 const geometry = new THREE.BoxGeometry(3,3,3);
 const material = new THREE.MeshBasicMaterial({color : 'white'});
 const Mesh = new THREE.Mesh(geometry , material);

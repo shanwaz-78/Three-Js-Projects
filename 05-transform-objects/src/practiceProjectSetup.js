@@ -23,4 +23,4 @@ function animate_cube() {
   cube.rotation.y += 0.04;
   renderer.render(scene, camera);
 }
-requestAnimationFrame(animate_cube);
+animate_cube()

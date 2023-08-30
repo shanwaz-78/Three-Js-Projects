@@ -5,7 +5,7 @@ import grassImage from "../static/img/Grow.jpg";
 import grass2Image from "../static/img/grass2.jpg";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import dat from "dat.gui";
-import audio from "../static/audio/ghost-whispers-6030.mp3";
+// import audio from "../static/audio/ghost-whispers-6030.mp3";
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(
@@ -211,10 +211,10 @@ function add_gui() {
 add_gui();
 
 // audio listner
-const audioFile = new Audio(audio);
-document.addEventListener("DOMContentLoaded", () => {
-  audioFile.play();
-});
+// const audioFile = new Audio(audio);
+// document.addEventListener("DOMContentLoaded", () => {
+//   audioFile.play();
+// });
 
 function tick() {
   requestAnimationFrame(tick);
@@ -231,4 +231,5 @@ function animate() {
   controls.update();
   renderer.render(scene, camera);
 }
-animate();
+animate()
+
