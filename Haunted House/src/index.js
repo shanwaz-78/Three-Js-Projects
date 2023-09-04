@@ -210,6 +210,16 @@ function add_gui() {
 }
 add_gui();
 
+document.addEventListener("keypress", (event) => {
+  if (event.key === "f" || event.key === "F") {
+    if (!document.fullscreenElement) {
+      document.body.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  }
+});
+
 // audio listner
 // const audioFile = new Audio(audio);
 // document.addEventListener("DOMContentLoaded", () => {
@@ -231,5 +241,4 @@ function animate() {
   controls.update();
   renderer.render(scene, camera);
 }
-animate()
-
+animate();
