@@ -6,7 +6,6 @@ scene.background = new THREE.Color('grey');
 const camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.set(0, 20, 25);
 
-
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
@@ -54,3 +53,4 @@ function animate_mesh() {
   renderer.render(scene, camera);
 }
 requestAnimationFrame(animate_mesh);
+
