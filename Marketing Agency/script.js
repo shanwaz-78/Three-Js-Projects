@@ -1,172 +1,181 @@
-window.addEventListener("DOMContentLoaded", () => {
-  gsap.registerPlugin(ScrollTrigger);
+// window.addEventListener("DOMContentLoaded", () => {
+//   gsap.registerPlugin(ScrollTrigger);
 
-  gsap.from(".logo div", {
-    opacity: 0,
-    delay: 1,
-    x: 20,
-  });
+//   gsap.from(".logo div", {
+//     opacity: 0,
+//     delay: 1,
+//     x: 20,
+//   });
 
-  let menu_items = document.querySelector(".menu-items");
-  gsap.from(menu_items.children, {
-    opacity: 0,
-    x: 0,
-    duration: 1,
-    delay: 1.5,
-    stagger: {
-      amount: 1,
-    },
-  });
+//   let menu_items = document.querySelector(".menu-items");
+//   gsap.from(menu_items.children, {
+//     opacity: 0,
+//     x: 0,
+//     duration: 1,
+//     delay: 1.5,
+//     stagger: {
+//       amount: 1,
+//     },
+//   });
 
-  gsap.utils.toArray(".star").forEach((star) => {
-    gsap.fromTo(
-      star,
-      {
-        rotation: 450,
-        opacity: 0,
-        y: 100,
-      },
-      {
-        rotation: 0,
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        delay: 1.5,
-        scrollTrigger: star,
-      }
-    );
-  });
+//   gsap.utils.toArray(".star").forEach((star) => {
+//     gsap.fromTo(
+//       star,
+//       {
+//         rotation: 450,
+//         opacity: 0,
+//         y: 100,
+//       },
+//       {
+//         rotation: 0,
+//         opacity: 1,
+//         y: 0,
+//         duration: 1,
+//         delay: 1.5,
+//         scrollTrigger: star,
+//       }
+//     );
+//   });
 
-  gsap.utils.toArray(".title").forEach((title) => {
-    gsap.fromTo(
-      title,
-      {
-        letterSpacing: "10px",
-        opacity: 0,
-        x: 300,
-        skewX: 65,
-      },
-      {
-        letterSpacing: "0",
-        opacity: 1,
-        x: 0,
-        skewX: 0,
-        duration: 1,
-        delay: 0.5,
-        scrollTrigger: title,
-      }
-    );
-  });
+//   gsap.utils.toArray(".title").forEach((title) => {
+//     gsap.fromTo(
+//       title,
+//       {
+//         letterSpacing: "10px",
+//         opacity: 0,
+//         x: 300,
+//         skewX: 65,
+//       },
+//       {
+//         letterSpacing: "0",
+//         opacity: 1,
+//         x: 0,
+//         skewX: 0,
+//         duration: 1,
+//         delay: 0.5,
+//         scrollTrigger: title,
+//       }
+//     );
+//   });
 
-  gsap.utils.toArray("p").forEach((p) => {
-    gsap.fromTo(
-      p,
-      {
-        opacity: 0,
-        x: 150,
-        skewX: 30,
-      },
-      {
-        opacity: 1,
-        x: 0,
-        skewX: 0,
-        duration: 1,
-        delay: 0.5,
-        scrollTrigger: p,
-      }
-    );
-  });
+//   gsap.utils.toArray("p").forEach((p) => {
+//     gsap.fromTo(
+//       p,
+//       {
+//         opacity: 0,
+//         x: 150,
+//         skewX: 30,
+//       },
+//       {
+//         opacity: 1,
+//         x: 0,
+//         skewX: 0,
+//         duration: 1,
+//         delay: 0.5,
+//         scrollTrigger: p,
+//       }
+//     );
+//   });
 
-  gsap.utils.toArray("button").forEach((button) => {
-    gsap.fromTo(
-      button,
-      {
-        opacity: 0,
-      },
-      {
-        opacity: 1,
-        duration: 1,
-        delay: 1,
-        scrollTrigger: button,
-      }
-    );
-  });
+//   gsap.utils.toArray("button").forEach((button) => {
+//     gsap.fromTo(
+//       button,
+//       {
+//         opacity: 0,
+//       },
+//       {
+//         opacity: 1,
+//         duration: 1,
+//         delay: 1,
+//         scrollTrigger: button,
+//       }
+//     );
+//   });
 
-  gsap.from(".pyramid", {
-    opacity: 0,
-    scale: 0.5,
-    duration: 1,
-    delay: 0.5,
-  });
+//   gsap.from(".pyramid", {
+//     opacity: 0,
+//     scale: 0.5,
+//     duration: 1,
+//     delay: 0.5,
+//   });
 
-  gsap.fromTo(
-    ".hand",
-    {
-      scale: 0.2,
-      opacity: 0,
-      skewY: 30,
-    },
-    {
-      scale: 1,
-      opacity: 1,
-      skewY: 0,
-      duration: 1,
-      delay: 0.5,
-      scrollTrigger: ".hand",
-    }
-  );
+//   gsap.fromTo(
+//     ".hand",
+//     {
+//       scale: 0.2,
+//       opacity: 0,
+//       skewY: 30,
+//     },
+//     {
+//       scale: 1,
+//       opacity: 1,
+//       skewY: 0,
+//       duration: 1,
+//       delay: 0.5,
+//       scrollTrigger: ".hand",
+//     }
+//   );
 
-  gsap.utils.toArray(".line").forEach((line) => {
-    gsap.fromTo(
-      line,
-      {
-        opacity: 0,
-        width: "0%",
-      },
-      {
-        opacity: 1,
-        width: "100%",
-        duration: 1,
-        delay: 1,
-        scrollTrigger: line,
-      }
-    );
-  });
+//   gsap.utils.toArray(".line").forEach((line) => {
+//     gsap.fromTo(
+//       line,
+//       {
+//         opacity: 0,
+//         width: "0%",
+//       },
+//       {
+//         opacity: 1,
+//         width: "100%",
+//         duration: 1,
+//         delay: 1,
+//         scrollTrigger: line,
+//       }
+//     );
+//   });
 
-  gsap.utils.toArray(".rotation").forEach((rotate) => {
-    gsap.fromTo(
-      rotate,
-      {
-        opacity: 0,
-        rotation: 350,
-        scale: 0.2,
-      },
-      {
-        opacity: 1,
-        rotation: 0,
-        scale: 1,
-        duration: 1,
-        delay: 1,
-        scrollTrigger: rotate,
-      }
-    );
-  });
+//   gsap.utils.toArray(".rotation").forEach((rotate) => {
+//     gsap.fromTo(
+//       rotate,
+//       {
+//         opacity: 0,
+//         rotation: 350,
+//         scale: 0.2,
+//       },
+//       {
+//         opacity: 1,
+//         rotation: 0,
+//         scale: 1,
+//         duration: 1,
+//         delay: 1,
+//         scrollTrigger: rotate,
+//       }
+//     );
+//   });
 
-  gsap.fromTo(
-    ".card",
-    {
-      opacity: 0,
-      scale: 0.1,
-    },
-    {
-      opacity: 1,
-      scale: 1,
-      duration: 1,
-      delay: 0.5,
-      stagger: {
-        amount: 1,
-      },
-      scrollTrigger: ".card",
-    }
-  );
-});
+//   gsap.fromTo(
+//     ".card",
+//     {
+//       opacity: 0,
+//       scale: 0.1,
+//     },
+//     {
+//       opacity: 1,
+//       scale: 1,
+//       duration: 1,
+//       delay: 0.5,
+//       stagger: {
+//         amount: 1,
+//       },
+//       scrollTrigger: ".card",
+//     }
+//   );
+// });
+
+// 67 ==> ES6: Destructuring Objects
+//     Using basic object destructuring you can assign variables name and email:
+//         let { name, email } = { name: "John", email: "john@example.com" }
+//         console.log(name)  // "John"
+//         console.log(email)  // "john@example.com"
+//     What if there were more properties but you didn't want to write variables for all of them and just wanted to stick them into another object and do something like this:
+//         let { name, email, rest} = { name: "John", email: "john@example.com", city: "Phoenix", state: "AZ", country: "USA"}
+//         rest ===  { city: "Phoenix", state: "AZ", country: "USA"} // true

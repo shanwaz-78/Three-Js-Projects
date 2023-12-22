@@ -72,11 +72,6 @@ a {
   text-wrap: nowrap;
 }
 
-a:hover {
-  border-bottom: 1px dotted cornsilk;
-  animation: slideEffect 0.4s forwards;
-}
-
 section {
   height: 100vh;
   padding: 3rem;
@@ -309,15 +304,6 @@ footer {
   }
   100% {
     transform: translateY(0px);
-  }
-}
-
-@keyframes slideEffect {
-  0% {
-    width: 0;
-  }
-  100% {
-    width: 55px;
   }
 }
 
