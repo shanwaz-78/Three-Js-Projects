@@ -1,28 +1,52 @@
 import * as THREE from "three";
 import doorImage from "../static/img/dorr.jpg";
+import doorAlphaImage from "../static/door/alpha.jpg";
+import doorOccutionImage from "../static/door/ambientOcclusion.jpg";
+import doorMetalnessImage from "../static/door/metalness.jpg";
+import doorDsiplacementImage from "../static/door/height.jpg";
 import wallImage from "../static/img/wall2640.jpg";
 import grassImage from "../static/img/Grow.jpg";
-import grass2Image from "../static/img/grass2.jpg";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import dat from "dat.gui";
-// import audio from "../static/audio/ghost-whispers-6030.mp3";
+import alphaImg from "../static/floor/alpha.jpg";
+import floorImg from "../static/texture/coast_sand_rocks_02_diff_1k.jpg";
+import floorNormalImg from "../static/texture/coast_sand_rocks_02_nor_gl_1k.jpg";
+import floorRoughnessImg from "../static/texture/coast_sand_rocks_02_rough_1k.jpg";
+import floorDisplacementImg from "../static/texture/displacement.jpg";
+import audio from "../static/audio/ghost-whispers-6030.mp3";
+const canvas = document.querySelector('canvas.webgl');
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(
-  75,
+  60,
   window.innerWidth / window.innerHeight,
   0.1,
   1000
 );
-camera.position.set(0, 3, 12);
-const renderer = new THREE.WebGLRenderer();
+camera.position.set(0, 3, 15);
+const renderer = new THREE.WebGLRenderer({canvas});
 renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+// Shadows
+renderer.shadowMap.enabled = true; // Enable shadow map
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild(renderer.domElement);
 
-const fog = new THREE.Fog("#262837", 4, 15);
+const fog = new THREE.Fog("#262837", 2, 15);
 scene.fog = fog;
 
-const ambient_light = new THREE.AmbientLight("#b9d5ff", 0.2);
+const directionalLight = new THREE.DirectionalLight("#ffffff", 1);
+directionalLight.position.set(5, 10, 7);
+directionalLight.castShadow = true;
+directionalLight.shadow.mapSize.width = 2048;
+directionalLight.shadow.mapSize.height = 2048;
+directionalLight.shadow.camera.near = 0.5;
+directionalLight.shadow.camera.far = 40;
+
+scene.add(directionalLight);
+
+const ambient_light = new THREE.AmbientLight("#86cdff", 0.2);
 scene.add(ambient_light);
 
 const house = new THREE.Group();
@@ -30,26 +54,38 @@ const miniHouse = new THREE.Group();
 scene.add(house, miniHouse);
 
 // door light
-const door_light = new THREE.PointLight("#ff7d46", 2, 100);
+const door_light = new THREE.PointLight("#ff7d46", 3, 100);
 door_light.position.set(0, 2.7, 2.8);
 house.add(door_light);
 
 // mini houe door light
 const door_light2 = new THREE.PointLight("#ff7d46", 2, 100);
+door_light2.castShadow = true;
 door_light2.position.set(-4.1, -0.1, 2.8);
 miniHouse.add(door_light2);
 // floor textures.
-const floor_texture = new THREE.TextureLoader().load(grass2Image);
-const ambient_texture = new THREE.TextureLoader().load(grassImage);
+const textureLoader = new THREE.TextureLoader();
+
+const floorTexture = textureLoader.load(floorImg);
+const floorNormalTexture = textureLoader.load(floorNormalImg);
+const floorRoughnessTexture = textureLoader.load(floorRoughnessImg);
+const floorDisplacementMap = textureLoader.load(floorDisplacementImg);
+const floorAlphaTexture = textureLoader.load(alphaImg);
+floorTexture.colorSpace = THREE.SRGBColorSpace;
 
 // Create a plane geometry
 const geometry = new THREE.PlaneGeometry(30, 30);
-const material = new THREE.MeshStandardMaterial({
-  map: floor_texture,
-  alphaMap: floor_texture,
-  aoMap: ambient_texture,
+const floorMaterial = new THREE.MeshStandardMaterial({
+  map: floorTexture, // Diffuse texture
+  normalMap: floorNormalTexture, // Normal Map
+  roughnessMap: floorRoughnessTexture, // Roughness Map
+  alphaMap: floorAlphaTexture, // Alpha Map for transparency
+  displacementMap : doorDsiplacementTexture,
+  displacementScale : 0.5,
+  transparent: true, // Enable transparency for alpha map
 });
-const floor = new THREE.Mesh(geometry, material);
+
+const floor = new THREE.Mesh(geometry, floorMaterial);
 
 floor.rotation.x = -Math.PI / 2; // rotate the floor 90 degrees in radians.
 floor.position.y = -1;
@@ -62,20 +98,23 @@ scene.add(ghost1);
 
 // roof
 const roof = new THREE.Mesh(
-  new THREE.ConeGeometry(5, 1.6, 4),
+  new THREE.ConeGeometry(5, 1.7, 4),
   new THREE.MeshStandardMaterial({ color: "#b35f45" })
 );
 roof.position.y = 3.7;
 roof.rotation.y = 2.4;
+roof.castShadow = true;
+floor.receiveShadow = true;
 house.add(roof);
 
 // mini house roof
 const miniRoof = new THREE.Mesh(
-  new THREE.ConeGeometry(1, 0.5, 4),
+  new THREE.ConeGeometry(1, 0.3, 4),
   new THREE.MeshStandardMaterial({ color: "#b35f41" })
 );
-miniRoof.position.set(-4, 0.2, 2);
+miniRoof.position.set(-4, 0.1, 2);
 miniRoof.rotation.y = 0.7;
+miniRoof.castShadow = true;
 miniHouse.add(miniRoof);
 const bush_geometry = new THREE.SphereGeometry(1, 17, 17);
 const bush_material = new THREE.MeshStandardMaterial({
@@ -107,18 +146,35 @@ bush4.position.set(-1.5, -0.7, 3);
 bush4.castShadow = true; // Enable shadow casting for the bush
 house.add(bush4);
 
+bush1.castShadow = true;
+bush2.castShadow = true;
+bush3.castShadow = true;
+bush4.castShadow = true;
+
 // textures
 const door_texture = new THREE.TextureLoader().load(doorImage);
 const wall_texture = new THREE.TextureLoader().load(wallImage);
+const doorAlphaTexture = new THREE.TextureLoader().load(doorAlphaImage);
+const doorOccutionTexture = new THREE.TextureLoader().load(doorOccutionImage);
+const doorMetalnessTexture = new THREE.TextureLoader().load(doorMetalnessImage);
+const doorDsiplacementTexture = new THREE.TextureLoader().load(
+  doorDsiplacementImage
+);
 
 // door
 const door = new THREE.Mesh(
-  new THREE.PlaneGeometry(2, 2),
+  new THREE.PlaneGeometry(2, 2, 100, 100),
   new THREE.MeshStandardMaterial({
     map: door_texture,
+    alphaMap: doorAlphaTexture,
+    transparent: true,
+    metalnessMap: doorMetalnessTexture,
+    roughness: 2,
+    displacementMap: doorDsiplacementTexture,
+    displacementScale: 0.3,
   })
 );
-door.position.z = 2.5 + 0.01;
+door.position.set(0, -0.1, 2.4);
 house.add(door);
 
 // mini door
@@ -173,10 +229,9 @@ for (let i = 0; i < 70; i++) {
   grave.position.set(xPos, -0.6, zPos);
   graves.add(grave);
 }
-
-// Shadows
-renderer.shadowMap.enabled = true; // Enable shadow map
-renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Set shadow map type for smoother shadows
+graves.children.forEach((grave) => {
+  grave.castShadow = true;
+});
 
 ghost1.castShadow = true; // Enable shadow casting for ghost1
 
@@ -188,11 +243,12 @@ const boxMaterial = new THREE.MeshStandardMaterial({
   aoMap: wall_texture,
   alphaMap: wall_texture,
   roughnessMap: wall_texture,
+  side: THREE.DoubleSide,
 });
 const walls = new THREE.Mesh(BoxGeometry, boxMaterial);
 const miniWalls = new THREE.Mesh(miniBoxGeometry, boxMaterial);
 miniWalls.position.set(-4, -0.5, 2);
-walls.position.y = 1;
+walls.position.y = 1.001;
 walls.receiveShadow = true; // Enable shadow receiving for walls
 house.add(walls);
 miniHouse.add(miniWalls);
@@ -211,19 +267,21 @@ function add_gui() {
 add_gui();
 
 document.addEventListener("keypress", (event) => {
-  if(event.key === 'f' || event.key === 'F'){
-    if(!document.fullscreenElement){
-      document.body.requestFullscreen()
-    }else{
-      document.exitFullscreen()
-    }
+  if (event.key === "f" || (event.key === "F" && !document.fullscreenElement)) {
+    document.body.requestFullscreen();
+  } else {
+    document.exitFullscreen();
   }
 });
 
 // audio listner
 // const audioFile = new Audio(audio);
+
 // document.addEventListener("DOMContentLoaded", () => {
-//   audioFile.play();
+//   setTimeout(() => {
+//     audioFile.volume = 0.5;
+//     audioFile.play();
+//   }, 1200);
 // });
 
 function tick() {
@@ -242,4 +300,3 @@ function animate() {
   renderer.render(scene, camera);
 }
 animate();
-
